@@ -1,4 +1,4 @@
 # posts-and-comments-app
-Application for practicing backend skills( Nest JS ).
+An application for practicing skills of working with the backend (Nest JS) and frontend (architecture).
 
 Stack: Nest, PostgreSQL, TypeORM, React, Redux Toolkit, Docker, docker-compose
