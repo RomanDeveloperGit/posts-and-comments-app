@@ -36,9 +36,9 @@ export const PostList = () => {
         status={postList.status}
         itemsPerPage={postList.meta.itemsPerPage}
         totalElementsCount={postList.meta.totalItems}
-        handleFetchList={handleFetchPostList}
+        handleGetList={handleGetPostList}
       >
-        {postLGetata?.map((poGet> (
+        {postList.data?.map((post) => (
           <PostCard
             title={post.title}
             description={post.description}
