@@ -35,13 +35,13 @@ export const ListWithPagination: FC<Props> = ({
           </Space>
         </SkeletonList>
       </Space>
-      {children.length ? (
+      {!children.length && status === 'fulfilled' ? null : (
         <Pagination
           onChange={handleFetchList}
           pageSize={itemsPerPage}
           total={totalElementsCount}
         />
-      ) : null}
+      )}
     </div>
   );
 };
