@@ -24,13 +24,13 @@ export const ListWithPagination: FC<Props> = ({
 }) => {
   return (
     <div>
-      <Space className={styles.space} direction="vertical">
+      <Space className={styles.box} direction="vertical">
         <SkeletonList
           length={3}
           loading={status === 'pending'}
           paragraph={{ rows: 6 }}
         >
-          <Space className={styles.space} direction="vertical">
+          <Space className={styles.box} direction="vertical">
             {children}
           </Space>
         </SkeletonList>
