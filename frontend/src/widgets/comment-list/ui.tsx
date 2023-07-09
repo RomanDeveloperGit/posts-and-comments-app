@@ -24,26 +24,22 @@ export const CommentList: FC<Props> = ({
   totalElementsCount,
   handleFetchCommentList,
 }) => {
-  console.log('Comment-list', data);
-
   return (
-    <div>
-      <ListWithPagination
-        status={status}
-        itemsPerPage={itemsPerPage}
-        totalElementsCount={totalElementsCount}
-        handleFetchList={handleFetchCommentList}
-      >
-        {data?.map((comment) => (
-          <CommentCard
-            author={`Автор: ${comment.author}`}
-            content={`Комментарий: ${comment.content}`}
-            createdAt={comment.createdAt}
-            updatedAt={comment.updatedAt}
-            key={comment.id}
-          />
-        ))}
-      </ListWithPagination>
-    </div>
+    <ListWithPagination
+      status={status}
+      itemsPerPage={itemsPerPage}
+      totalElementsCount={totalElementsCount}
+      handleFetchList={handleFetchCommentList}
+    >
+      {data?.map((comment) => (
+        <CommentCard
+          author={`Автор: ${comment.author}`}
+          content={`Комментарий: ${comment.content}`}
+          createdAt={comment.createdAt}
+          updatedAt={comment.updatedAt}
+          key={comment.id}
+        />
+      ))}
+    </ListWithPagination>
   );
 };

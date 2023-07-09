@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { Response, Store } from '../../shared/types';
+import { Store } from '../../shared/types';
 
 import { Post } from '../../entity/post';
 
@@ -24,11 +24,6 @@ export const fetchPostList = createAsyncThunk(
   async ({ page, limit }: Store.PaginationPayload) => {
     const data = await postListApi.fetchPostList(page, limit);
 
-    // Тоже для скелетона. Искуственная задержка. Знаю, что не очень красиво здесь это делать.
-    await new Promise((resolve) => {
-      setTimeout(resolve, 1000);
-    });
-
     return data;
   },
 );
@@ -40,7 +35,8 @@ export const postListSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPostList.pending, (state) => {
-        // Специально обнуляю список для скелетона
+        // Специально обнуляю список для скелетона. С точки зрения UX - не очень, ...
+        // ...но в тестовых целях сойдет.
         state.data = [];
         state.status = 'pending';
       })

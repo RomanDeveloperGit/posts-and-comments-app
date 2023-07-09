@@ -17,6 +17,10 @@ import { App } from './app';
 // Вытащить селекторы в модели, чтобы ограничить область стора
 // Разобраться с явными и неявными зависимостями в shared
 
+// Позаменять все дивы на соответствующие элементы в ANTD
+
+// При пагинации откручивать страницу в начало
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <App />

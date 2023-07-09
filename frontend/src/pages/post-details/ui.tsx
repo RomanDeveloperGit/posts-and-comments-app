@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Spin, Typography } from 'antd';
+import { Pagination, Spin, Typography } from 'antd';
 
 import { PAGINATION } from '../../shared/config';
 import { Page, SkeletonItem } from '../../shared/ui';
@@ -66,11 +66,9 @@ export const PostDetailsPage = () => {
     handleFetchCommentListByPostId(1);
   }, []);
 
-  console.log('Post details');
-
   return (
     <Page>
-      <Typography.Title>{post ? post.title : <Spin />}</Typography.Title>
+      <Typography.Title>Пост: {post ? post.title : <Spin />}</Typography.Title>
       <div className={styles.post}>
         <SkeletonItem loading={!post} paragraph={{ rows: 5 }}>
           {post && (
@@ -82,13 +80,21 @@ export const PostDetailsPage = () => {
           )}
         </SkeletonItem>
       </div>
-      <CommentList
-        data={commentList.data}
-        status={commentList.status}
-        itemsPerPage={commentList.meta.itemsPerPage}
-        totalElementsCount={commentList.meta.totalItems}
-        handleFetchCommentList={handleFetchCommentListByPostId}
-      />
+      <div className={styles.commentBox}>
+        <Typography.Title level={3}>
+          Комментарии{' '}
+          {!commentList.data.length && commentList.status === 'fulfilled'
+            ? 'отсутствуют'
+            : null}
+        </Typography.Title>
+        <CommentList
+          data={commentList.data}
+          status={commentList.status}
+          itemsPerPage={commentList.meta.itemsPerPage}
+          totalElementsCount={commentList.meta.totalItems}
+          handleFetchCommentList={handleFetchCommentListByPostId}
+        />
+      </div>
     </Page>
   );
 };

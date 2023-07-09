@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { Response, Store } from '../../shared/types';
+import { Store } from '../../shared/types';
 
 import { Post, postApi } from '../../entity/post';
 import { Comment } from '../../entity/comment';
@@ -43,10 +43,6 @@ export const fetchPostById = createAsyncThunk(
   async ({ id }: PostPayload) => {
     const data = await postApi.fetchPostById(id);
 
-    await new Promise((resolve) => {
-      setTimeout(resolve, 1000);
-    });
-
     return data;
   },
 );
@@ -55,10 +51,6 @@ export const fetchCommentListByPostId = createAsyncThunk(
   'post/one/comments',
   async ({ id, page, limit }: CommentsPayload) => {
     const data = await postDetailsApi.fetchCommentListByPostId(id, page, limit);
-
-    await new Promise((resolve) => {
-      setTimeout(resolve, 1000);
-    });
 
     return data;
   },
@@ -96,6 +88,7 @@ export const postDetailsSlice = createSlice({
       })
       .addCase(fetchCommentListByPostId.fulfilled, (state, action) => {
         state.commentList.data = action.payload.items;
+        state.commentList.meta = action.payload.meta;
         state.commentList.status = 'fulfilled';
       })
       .addCase(fetchCommentListByPostId.rejected, (state, action) => {
