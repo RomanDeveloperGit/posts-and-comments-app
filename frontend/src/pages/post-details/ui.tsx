@@ -2,10 +2,10 @@ import { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Layout, Spin, Typography } from 'antd';
+import { Spin, Typography } from 'antd';
 
 import { PAGINATION } from '../../shared/config';
-import { SkeletonItem } from '../../shared/ui';
+import { Page, SkeletonItem } from '../../shared/ui';
 
 import { PostContent } from '../../entity/post';
 
@@ -73,7 +73,7 @@ export const PostDetailsPage = () => {
   console.log('Post details');
 
   return (
-    <Layout>
+    <Page>
       <Typography.Title>{post ? post.title : <Spin />}</Typography.Title>
       <div className={styles.post}>
         <SkeletonItem loading={!post} paragraph={{ rows: 5 }}>
@@ -93,6 +93,6 @@ export const PostDetailsPage = () => {
         totalElementsCount={commentList.meta.totalItems}
         handleFetchCommentList={handleFetchCommentListByPostId}
       />
-    </Layout>
+    </Page>
   );
 };

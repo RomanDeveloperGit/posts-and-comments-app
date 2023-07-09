@@ -1,12 +1,14 @@
 import { Typography } from 'antd';
 
+import { Page } from '../../shared/ui';
+
 import { PostList } from '../../widgets/post-list';
 
 export const PostsPage = () => {
   return (
-    <section>
+    <Page>
       <Typography.Title>PostsPage</Typography.Title>
       <PostList />
-    </section>
+    </Page>
   );
 };
