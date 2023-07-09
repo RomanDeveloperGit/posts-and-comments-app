@@ -16,7 +16,7 @@ export const fetchCommentListByPostId = async (
         limit,
       },
     })
-    .json<Response.ListWithPagination<Comment>>();
+    .json<Response.List<Comment>>();
 
   return data;
 };

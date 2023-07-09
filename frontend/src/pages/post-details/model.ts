@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { PaginationOptions, Response, Store } from '../../shared/types';
+import { Response, Store } from '../../shared/types';
 
 import { Post, postApi } from '../../entity/post';
 import { Comment } from '../../entity/comment';
@@ -8,17 +8,8 @@ import { Comment } from '../../entity/comment';
 import { postDetailsApi } from './api';
 
 export interface PostDetailsState {
-  post: {
-    data: Post | null;
-    status: Store.Status;
-    error: string | null;
-  };
-  commentList: {
-    data: Response.ListWithPagination<Comment>['items'];
-    meta: Response.ListWithPagination<Comment>['meta'];
-    status: Store.Status;
-    error: string | null;
-  };
+  post: Store.ServerItemState<Post | null>;
+  commentList: Store.ServerListState<Comment>;
 }
 
 const initialState: PostDetailsState = {
@@ -45,7 +36,7 @@ type PostPayload = {
   id: number;
 };
 
-type CommentsPayload = PostPayload & PaginationOptions;
+type CommentsPayload = PostPayload & Store.PaginationPayload;
 
 export const fetchPostById = createAsyncThunk(
   'post/one',
@@ -78,7 +69,7 @@ export const postDetailsSlice = createSlice({
   name: 'postDetails',
   initialState,
   reducers: {
-    putPostFromList(state, action: PayloadAction<Post>) {
+    setPostData(state, action: PayloadAction<Post>) {
       state.post.data = action.payload;
     },
   },

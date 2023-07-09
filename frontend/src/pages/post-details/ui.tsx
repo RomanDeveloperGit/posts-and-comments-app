@@ -26,10 +26,6 @@ export const PostDetailsPage = () => {
   const postId = useMemo(() => Number(id), [id]);
 
   const dispatch = useDispatch<RootDispatch>();
-  // Подумать, можно ли как-то запретить лазить отсюда в чужие стейты?
-  // ( Страница может лазить в разные стейты, это вопрос в целом )
-  // Либо правила в проект вводить + обязывать создавать селекторы в модели, чтобы...
-  // ...не было даже возможности физически( по типизации ) залезть в другой стейт.
   const post = useSelector((state: RootState) => state.postDetails.post.data);
 
   const postList = useSelector((state: RootState) => state.postList.data);
@@ -64,7 +60,7 @@ export const PostDetailsPage = () => {
 
     // Для улучшения UX подгрузим те данные, которые есть в сторе( если есть )
     if (foundPostInListById) {
-      dispatch(postDetailsSlice.actions.putPostFromList(foundPostInListById));
+      dispatch(postDetailsSlice.actions.setPostData(foundPostInListById));
     }
 
     handleFetchCommentListByPostId(1);
@@ -80,8 +76,8 @@ export const PostDetailsPage = () => {
           {post && (
             <PostContent
               description={post.description}
-              createdAt={post?.createdAt}
-              updatedAt={post?.updatedAt}
+              createdAt={post.createdAt}
+              updatedAt={post.updatedAt}
             />
           )}
         </SkeletonItem>

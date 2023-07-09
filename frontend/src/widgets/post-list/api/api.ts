@@ -11,7 +11,7 @@ export const fetchPostList = async (page: number, limit: number) => {
         limit,
       },
     })
-    .json<Response.ListWithPagination<Post>>();
+    .json<Response.List<Post>>();
 
   return data;
 };

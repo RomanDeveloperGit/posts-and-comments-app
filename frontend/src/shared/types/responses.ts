@@ -1,10 +1,12 @@
-export type ListWithPagination<Item> = {
+export type ListMeta = {
+  totalItems: number;
+  itemCount: number;
+  itemsPerPage: number;
+  totalPages: number;
+  currentPage: number;
+};
+
+export type List<Item> = {
   items: Item[];
-  meta: {
-    totalItems: number;
-    itemCount: number;
-    itemsPerPage: number;
-    totalPages: number;
-    currentPage: number;
-  };
+  meta: ListMeta;
 };

@@ -1,23 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { Response, PaginationOptions, Store } from '../../shared/types';
+import { Response, Store } from '../../shared/types';
 
-import { Post, postApi } from '../../entity/post';
+import { Post } from '../../entity/post';
 
 import { postListApi } from './api';
 
-// Вынести общую типизацию для отдельного Item + для List Store
-export interface PostListState {
-  data: Response.ListWithPagination<Post>['items'];
-  meta: Response.ListWithPagination<Post>['meta'];
-  status: Store.Status;
-  error: string | null;
-}
-
-const initialState: PostListState = {
+const initialState: Store.ServerListState<Post> = {
   data: [],
   meta: {
-    totalItems: 1, // для корректного отображения Antd Pagination
+    totalItems: 1, // для корректного отображения Antd Pagination при первой загрузке
     itemCount: 0,
     itemsPerPage: 10,
     totalPages: 1,
@@ -29,8 +21,7 @@ const initialState: PostListState = {
 
 export const fetchPostList = createAsyncThunk(
   'post/list',
-  // PaginationOptions -> PaginationPayload?
-  async ({ page, limit }: PaginationOptions) => {
+  async ({ page, limit }: Store.PaginationPayload) => {
     const data = await postListApi.fetchPostList(page, limit);
 
     // Тоже для скелетона. Искуственная задержка. Знаю, что не очень красиво здесь это делать.

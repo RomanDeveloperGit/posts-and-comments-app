@@ -1,5 +1,18 @@
+import { ListMeta } from './responses';
+
 export type Status = 'idle' | 'pending' | 'fulfilled' | 'rejected';
 
-// Item data with status, error
+export interface ServerItemState<T> {
+  data: T;
+  status: Status;
+  error: string | null;
+}
 
-// List data with status, error
+export interface ServerListState<T> extends ServerItemState<T[]> {
+  meta: ListMeta;
+}
+
+export type PaginationPayload = {
+  page: number;
+  limit: number;
+};
