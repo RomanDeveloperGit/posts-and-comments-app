@@ -7,7 +7,7 @@ import { ListWithPagination } from '../../shared/ui';
 
 import { PostCard } from '../../entity/post';
 
-import { fetchPostList } from './model';
+import { getPostList } from './model';
 
 export const PostList = () => {
   const navigate = useNavigate();
@@ -15,9 +15,9 @@ export const PostList = () => {
 
   const postList = useSelector((state: RootState) => state.postList);
 
-  const handleFetchPostList = (page: number) => {
+  const handleGetPostList = (page: number) => {
     dispatch(
-      fetchPostList({
+      getPostList({
         page,
         limit: PAGINATION.ITEMS_PER_PAGE,
       }),
@@ -25,7 +25,7 @@ export const PostList = () => {
   };
 
   useEffect(() => {
-    handleFetchPostList(1);
+    handleGetPostList(1);
   }, []);
 
   console.log('Post-list', postList.status, postList.data, postList.meta);
@@ -38,7 +38,7 @@ export const PostList = () => {
         totalElementsCount={postList.meta.totalItems}
         handleFetchList={handleFetchPostList}
       >
-        {postList.data?.map((post) => (
+        {postLGetata?.map((poGet> (
           <PostCard
             title={post.title}
             description={post.description}

@@ -4,7 +4,7 @@ import type { Response } from '../../../shared/types';
 import { Comment } from '../../../entity/comment/model/types';
 
 // Надо ли задать общий интерфейс для таких функций, где передается page, limit?
-export const fetchCommentListByPostId = async (
+export const getCommentListByPostId = async (
   postId: number,
   page: number,
   limit: number,

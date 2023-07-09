@@ -12,7 +12,7 @@ type Props = {
   status: Store.Status;
   itemsPerPage: number;
   totalElementsCount: number;
-  handleFetchList: (page: number) => void;
+  handleGetList: (page: number) => void;
 };
 
 export const ListWithPagination: FC<Props> = ({
@@ -20,7 +20,7 @@ export const ListWithPagination: FC<Props> = ({
   status,
   itemsPerPage,
   totalElementsCount,
-  handleFetchList,
+  handleGetList,
 }) => {
   return (
     <div>
@@ -37,7 +37,7 @@ export const ListWithPagination: FC<Props> = ({
       </Space>
       {!children.length && status === 'fulfilled' ? null : (
         <Pagination
-          onChange={handleFetchList}
+          onChange={handleGetList}
           pageSize={itemsPerPage}
           total={totalElementsCount}
         />

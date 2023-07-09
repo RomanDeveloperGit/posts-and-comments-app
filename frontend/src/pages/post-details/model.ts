@@ -38,19 +38,19 @@ type PostPayload = {
 
 type CommentsPayload = PostPayload & Store.PaginationPayload;
 
-export const fetchPostById = createAsyncThunk(
+export const getPostById = createAsyncThunk(
   'post/one',
   async ({ id }: PostPayload) => {
-    const data = await postApi.fetchPostById(id);
+    const data = await postApi.getPostById(id);
 
     return data;
   },
 );
 
-export const fetchCommentListByPostId = createAsyncThunk(
+export const getCommentListByPostId = createAsyncThunk(
   'post/one/comments',
   async ({ id, page, limit }: CommentsPayload) => {
-    const data = await postDetailsApi.fetchCommentListByPostId(id, page, limit);
+    const data = await postDetailsApi.getCommentListByPostId(id, page, limit);
 
     return data;
   },
@@ -67,31 +67,31 @@ export const postDetailsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPostById.pending, (state) => {
+      .addCase(getPostById.pending, (state) => {
         state.post.data = null;
         state.post.status = 'pending';
       })
-      .addCase(fetchPostById.fulfilled, (state, action) => {
+      .addCase(getPostById.fulfilled, (state, action) => {
         state.post.data = action.payload;
         state.post.status = 'fulfilled';
       })
-      .addCase(fetchPostById.rejected, (state, action) => {
+      .addCase(getPostById.rejected, (state, action) => {
         state.post.data = null;
         state.post.status = 'rejected';
         state.post.error = action.error.message || 'Error';
       });
 
     builder
-      .addCase(fetchCommentListByPostId.pending, (state) => {
+      .addCase(getCommentListByPostId.pending, (state) => {
         state.commentList.data = [];
         state.commentList.status = 'pending';
       })
-      .addCase(fetchCommentListByPostId.fulfilled, (state, action) => {
+      .addCase(getCommentListByPostId.fulfilled, (state, action) => {
         state.commentList.data = action.payload.items;
         state.commentList.meta = action.payload.meta;
         state.commentList.status = 'fulfilled';
       })
-      .addCase(fetchCommentListByPostId.rejected, (state, action) => {
+      .addCase(getCommentListByPostId.rejected, (state, action) => {
         state.commentList.data = [];
         state.commentList.status = 'rejected';
         state.commentList.error = action.error.message || 'Error';

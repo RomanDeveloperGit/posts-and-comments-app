@@ -10,7 +10,7 @@ type Props = {
   status: Store.Status;
   itemsPerPage: number;
   totalElementsCount: number;
-  handleFetchCommentList: (page: number) => void;
+  handleGetCommentList: (page: number) => void;
 };
 
 // Его нужно положить в виджеты В СТРАНИЦУ? Ведь это просто UI-отображалка именно к той странице.
@@ -22,14 +22,14 @@ export const CommentList: FC<Props> = ({
   status,
   itemsPerPage,
   totalElementsCount,
-  handleFetchCommentList,
+  handleGetCommentList,
 }) => {
   return (
     <ListWithPagination
       status={status}
       itemsPerPage={itemsPerPage}
       totalElementsCount={totalElementsCount}
-      handleFetchList={handleFetchCommentList}
+      handleGetList={handleGetCommentList}
     >
       {data?.map((comment) => (
         <CommentCard

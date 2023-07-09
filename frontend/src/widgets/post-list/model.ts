@@ -19,10 +19,10 @@ const initialState: Store.ServerListState<Post> = {
   error: null,
 };
 
-export const fetchPostList = createAsyncThunk(
+export const getPostList = createAsyncThunk(
   'post/list',
   async ({ page, limit }: Store.PaginationPayload) => {
-    const data = await postListApi.fetchPostList(page, limit);
+    const data = await postListApi.getPostList(page, limit);
 
     return data;
   },
@@ -34,18 +34,18 @@ export const postListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPostList.pending, (state) => {
+      .addCase(getPostList.pending, (state) => {
         // Специально обнуляю список для скелетона. С точки зрения UX - не очень, ...
         // ...но в тестовых целях сойдет.
         state.data = [];
         state.status = 'pending';
       })
-      .addCase(fetchPostList.fulfilled, (state, action) => {
+      .addCase(getPostList.fulfilled, (state, action) => {
         state.data = action.payload.items;
         state.meta = action.payload.meta;
         state.status = 'fulfilled';
       })
-      .addCase(fetchPostList.rejected, (state, action) => {
+      .addCase(getPostList.rejected, (state, action) => {
         state.data = [];
         state.status = 'rejected';
         state.error = action.error.message || 'Error';

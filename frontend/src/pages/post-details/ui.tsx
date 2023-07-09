@@ -12,8 +12,8 @@ import { PostContent } from '../../entity/post';
 import { CommentList } from '../../widgets/comment-list';
 
 import {
-  fetchCommentListByPostId,
-  fetchPostById,
+  getCommentListByPostId,
+  getPostById,
   postDetailsSlice,
 } from './model';
 
@@ -38,9 +38,9 @@ export const PostDetailsPage = () => {
     (state: RootState) => state.postDetails.commentList,
   );
 
-  const handleFetchCommentListByPostId = (commentPage: number) => {
+  const handleGetCommentListByPostId = (commentPage: number) => {
     dispatch(
-      fetchCommentListByPostId({
+      getCommentListByPostId({
         id: postId,
         page: commentPage,
         limit: PAGINATION.ITEMS_PER_PAGE,
@@ -56,14 +56,14 @@ export const PostDetailsPage = () => {
 
     // Пусть грузит асинхронно( вдруг данные в postList были загружены минут 10 назад, а за эти...
     // ...10 минут уже отредачили пост )
-    dispatch(fetchPostById({ id: postId }));
+    dispatch(getPostById({ id: postId }));
 
     // Для улучшения UX подгрузим те данные, которые есть в сторе( если есть )
     if (foundPostInListById) {
       dispatch(postDetailsSlice.actions.setPostData(foundPostInListById));
     }
 
-    handleFetchCommentListByPostId(1);
+    handleGetCommentListByPostId(1);
   }, []);
 
   return (
@@ -92,7 +92,7 @@ export const PostDetailsPage = () => {
           status={commentList.status}
           itemsPerPage={commentList.meta.itemsPerPage}
           totalElementsCount={commentList.meta.totalItems}
-          handleFetchCommentList={handleFetchCommentListByPostId}
+          handleGetCommentList={handleGetCommentListByPostId}
         />
       </div>
     </Page>
