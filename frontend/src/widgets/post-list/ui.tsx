@@ -7,7 +7,7 @@ import { ListWithPagination } from '../../shared/ui';
 
 import { PostCard } from '../../entity/post';
 
-import { getPostList } from './model';
+import { getPostList } from './model/model';
 
 export const PostList = () => {
   const navigate = useNavigate();
@@ -24,9 +24,9 @@ export const PostList = () => {
     );
   };
 
-  useEffect(() => {
-    handleGetPostList(1);
-  }, []);
+  // useEffect(() => {
+  //   handleGetPostList(1);
+  // }, []);
 
   console.log('Post-list', postList.status, postList.data, postList.meta);
 

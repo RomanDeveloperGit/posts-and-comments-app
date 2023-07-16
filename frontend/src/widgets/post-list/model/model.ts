@@ -1,10 +1,12 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { Store } from '../../shared/types';
+import { Store } from '../../../shared/types';
 
-import { Post } from '../../entity/post';
+import { Post, postApi } from '../../../entity/post';
 
-import { postListApi } from './api';
+import { postListApi } from '../api';
+
+import { CreatePostPayload } from './types';
 
 const initialState: Store.ServerListState<Post> = {
   data: [],
@@ -20,9 +22,32 @@ const initialState: Store.ServerListState<Post> = {
 };
 
 export const getPostList = createAsyncThunk(
-  'post/list',
+  'post/list/get',
   async ({ page, limit }: Store.PaginationPayload) => {
     const data = await postListApi.getPostList(page, limit);
+
+    return data;
+  },
+);
+
+export const retryGetCurrentPostList = createAsyncThunk(
+  'post/list/retryGetCurrent',
+  async (_, { dispatch, getState }) => {
+    const state = getState() as RootState;
+
+    dispatch(
+      getPostList({
+        page: state.postList.meta.currentPage,
+        limit: state.postList.meta.itemsPerPage,
+      }),
+    );
+  },
+);
+
+export const createPost = createAsyncThunk(
+  'post/one/create',
+  async ({ title, description }: CreatePostPayload) => {
+    const data = await postApi.createPost(title, description);
 
     return data;
   },
@@ -31,13 +56,14 @@ export const getPostList = createAsyncThunk(
 export const postListSlice = createSlice({
   name: 'postList',
   initialState,
-  reducers: {},
+  reducers: {
+    addPost(state, action: PayloadAction<Post>) {
+      state.data.push(action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getPostList.pending, (state) => {
-        // Специально обнуляю список для скелетона. С точки зрения UX - не очень, ...
-        // ...но в тестовых целях сойдет.
-        state.data = [];
         state.status = 'pending';
       })
       .addCase(getPostList.fulfilled, (state, action) => {

@@ -39,7 +39,7 @@ type PostPayload = {
 type CommentsPayload = PostPayload & Store.PaginationPayload;
 
 export const getPostById = createAsyncThunk(
-  'post/one',
+  'post/one/get',
   async ({ id }: PostPayload) => {
     const data = await postApi.getPostById(id);
 
@@ -48,7 +48,7 @@ export const getPostById = createAsyncThunk(
 );
 
 export const getCommentListByPostId = createAsyncThunk(
-  'post/one/comments',
+  'post/one/comments/get',
   async ({ id, page, limit }: CommentsPayload) => {
     const data = await postDetailsApi.getCommentListByPostId(id, page, limit);
 
@@ -68,7 +68,6 @@ export const postDetailsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getPostById.pending, (state) => {
-        state.post.data = null;
         state.post.status = 'pending';
       })
       .addCase(getPostById.fulfilled, (state, action) => {
@@ -83,7 +82,6 @@ export const postDetailsSlice = createSlice({
 
     builder
       .addCase(getCommentListByPostId.pending, (state) => {
-        state.commentList.data = [];
         state.commentList.status = 'pending';
       })
       .addCase(getCommentListByPostId.fulfilled, (state, action) => {

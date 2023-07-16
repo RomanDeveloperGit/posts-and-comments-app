@@ -35,6 +35,7 @@ export const ListWithPagination: FC<Props> = ({
           </Space>
         </SkeletonList>
       </Space>
+      {/* Не нравится мне этот момент */}
       {!children.length && status === 'fulfilled' ? null : (
         <Pagination
           onChange={handleGetList}
