@@ -24,11 +24,9 @@ export const PostList = () => {
     );
   };
 
-  // useEffect(() => {
-  //   handleGetPostList(1);
-  // }, []);
-
-  console.log('Post-list', postList.status, postList.data, postList.meta);
+  useEffect(() => {
+    handleGetPostList(1);
+  }, []);
 
   return (
     <div>
